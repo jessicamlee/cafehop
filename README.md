@@ -1,11 +1,15 @@
 # Café Hop Mobile Application
 Track your next productivity spot to study or work with reliable wifi, charging outlets, and yummy snacks with Café Hop!
 
+## 🔮 Tools Used: 
+* **Design:** Adobe XD
+* **Development:** React Native, Android Studio
+
 ## ⚙ Getting Started
 ### 🔥 Live Demo
-_More coming soon!_
+_Coming soon!_
 
-### 🛠 Local Setup
+### 📍 Local Setup
 To set up and check out Café Hop on your local device: 
 1. Download files and open Command Prompt or Terminal.
 2. Install the project's packages using `npm install`.
