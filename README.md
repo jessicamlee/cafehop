@@ -3,7 +3,7 @@ Track your next productivity spot to study or work with reliable wifi, charging 
 
 ## 🔮 Tools Used: 
 * **Design:** Adobe XD
-* **Development:** React Native, Android Studio, MySQL/PHPMyAdmin
+* **Development:** React Native, Android Studio, MySQL
 
 ## ⚙ Getting Started
 ### 🔥 Live Demo
