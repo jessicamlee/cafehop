@@ -19,7 +19,12 @@ To set up and check out Café Hop on your local device:
 
 ## 💡 The Team
 Thank you to our team for designing and developing the Café Hop demo to bring this project to life for everyone to check out! 
-* Linda Huang, Designer/Creator/App Owner (http://www.lindah.design/)
-* Bana Nourkeyhani, Designer (http://banacreates.com/)
-* Samantha Tan, Developer (https://samanthatan.ca/)
-* Jessica lee, Developer (https://jessicamlee.dev/)
+* [**Linda Huang**](http://www.lindah.design/) — UX/UI Designer/Creator/App Owner
+* [**Bana Nourkeyhani**](http://banacreates.com/) — UX/UI Designer
+* [**Samantha Tan**](https://samanthatan.ca/) — Developer
+* [**Jessica Lee**](https://jessicamlee.dev/) — Developer
+
+## 👏🏻 Credits
+The latest Café Hop content is fictional, demo-only, and supported by the amazing photographers at Pexels. (Not sponsored)
+
+[**Anna Tukhfatullina**](https://www.pexels.com/photo/black-wooden-dining-table-in-a-coffee-shop-2551794/), [**NastyaSensei**](https://www.pexels.com/photo/two-cups-of-coffee-on-table-2575835/), [**Lisa Fotios**](https://www.pexels.com/photo/food-inside-display-chiller-1855214/), [**Haley Black**](https://www.pexels.com/photo/brown-wooden-dining-table-and-chairs-3968056/), [**Helena Ije**](https://www.pexels.com/photo/rectangular-brown-wooden-table-2867885/),[**Lisa Fotios**](https://www.pexels.com/photo/coffee-bar-1995010/), [**Marta Dzedyshko**](https://www.pexels.com/photo/white-and-black-dinette-set-2067560/),[**Amine**](https://www.pexels.com/photo/people-sitting-on-table-in-cafe-9376903/), [**Ceren Tosun**](https://www.pexels.com/photo/tables-and-wooden-chairs-in-a-coffee-shop-8939610/)
