@@ -5,6 +5,7 @@ import {
 	FlatList,
 	Image,
 	ActivityIndicator,
+	ImageBackground,
 } from "react-native";
 import { Text } from "@rneui/themed";
 
@@ -19,8 +20,10 @@ export default function HomeScreen() {
 	const currImage = "cats";
 	const page = 1;
 	const per_page = 10;
-
 	const uri = `https://api.unsplash.com/search/photos/?query=${currImage}&client_id=${clientKey}&page=${page}&per_page=${per_page}`;
+
+	const imageURL =
+		"https://images.unsplash.com/photo-1516743619420-154b70a65fea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80";
 
 	useEffect(() => {
 		fetch(uri)
@@ -39,8 +42,33 @@ export default function HomeScreen() {
 
 	return (
 		<View style={styles.container}>
-			<Text h1 style={styles.heading}>
-				Recent Saves
+			<Text h3 style={styles.heading}>
+				RECENT SAVES
+			</Text>
+			{/* <Image style={styles.favoritesImage} source={{ uri: imageURL }} /> */}
+			<ImageBackground
+				source={{ uri: imageURL }}
+				style={styles.favoritesImage}
+			>
+				<View
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Text h3 style={styles.heading}>
+						Centered text
+					</Text>
+				</View>
+			</ImageBackground>
+
+			<Text h3 style={styles.heading}>
+				POPULAR CAFES
 			</Text>
 			{displayDataContainer(error, isLoaded, images)}
 		</View>
@@ -52,7 +80,12 @@ function displayDataContainer(error, isLoaded, dataResult) {
 	const renderItem = ({ item }) => (
 		<View style={styles.imageCard}>
 			<Image style={styles.image} source={{ uri: item.urls.regular }} />
-			{/* <Text style={styles.pText}>{[item.user.name]}</Text> */}
+			<Text h4 style={styles.h4}>
+				{[item.user.name]}
+			</Text>
+			<Text h4 style={styles.h4}>
+				{[item.likes]}
+			</Text>
 		</View>
 	);
 
@@ -98,27 +131,28 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "flex-start",
 		justifyContent: "flex-start",
-		padding: 20,
+		padding: 30,
 	},
 
 	heading: {
 		textAlign: "center",
-		marginBottom: 30,
+		// marginBottom: 30,
 	},
 
 	pText: {
-		alignSelf: "center",
+		alignSelf: "flex-start",
 		padding: 10,
+		color: "#000",
 	},
 
 	imageCard: {
 		maxWidth: "90%",
-		flex: 0.4,
+		flex: 0.5,
 		backgroundColor: "#fff",
 		margin: 5,
 		borderColor: "#000000",
-		borderStyle: "solid",
-		borderWidth: 1,
+		// borderStyle: "solid",
+		// borderWidth: 1,
 		borderRadius: 10,
 	},
 
@@ -126,5 +160,13 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 130,
 		borderRadius: 8,
+	},
+
+	favoritesImage: {
+		width: "100%",
+		height: 160,
+		marginBottom: 30,
+		marginTop: 10,
+		borderRadius: 10,
 	},
 });
