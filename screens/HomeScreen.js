@@ -17,7 +17,7 @@ export default function HomeScreen() {
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	const clientKey = "dKK5AkmtyO5fzvtFKb8-ocZrWXj9NssdsXqjCaXZqWw";
-	const currImage = "cats";
+	const currImage = "coffee";
 	const page = 1;
 	const per_page = 10;
 	const uri = `https://api.unsplash.com/search/photos/?query=${currImage}&client_id=${clientKey}&page=${page}&per_page=${per_page}`;
@@ -49,6 +49,7 @@ export default function HomeScreen() {
 			<ImageBackground
 				source={{ uri: imageURL }}
 				style={styles.favoritesImage}
+				imageStyle={{ borderRadius: 6 }}
 			>
 				<View
 					style={{
@@ -62,7 +63,7 @@ export default function HomeScreen() {
 					}}
 				>
 					<Text h3 style={styles.heading}>
-						Centered text
+						Ki Tea House
 					</Text>
 				</View>
 			</ImageBackground>
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "flex-start",
 		justifyContent: "flex-start",
-		padding: 30,
+		paddingLeft: 50,
+		paddingRight: 50,
 	},
 
 	heading: {
