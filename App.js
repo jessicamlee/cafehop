@@ -14,7 +14,7 @@ import {
 
 // importing themes
 import { Icon, ThemeProvider } from "@rneui/themed";
-import { cafeHopTheme } from "./themes/cafeHopTheme.js";
+import { cafeHopTheme } from "./themes/cafeHopTheme";
 
 // importing screens (for Tab navigation)
 import HomeScreen from "./screens/HomeScreen";

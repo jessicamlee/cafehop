@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, Button, ButtonGroup, Divider } from "@rneui/themed";
+import { ThemeProvider } from "@rneui/themed";
+import { cafeHopTheme } from "../themes/cafeHopTheme";
 
 const arrNoiseTags = ["1", "2", "3", "4", "5"];
 const arrDecorTags = [
@@ -36,6 +38,7 @@ export default function SearchHomeScreen({
 	const [featureTagIndex, setAmenTagIndex] = useState(0);
 
 	return (
+		// <ThemeProvider theme={cafeHopTheme}>
 		<View style={styles.container}>
 			<Text style={styles.pText}>I would like a café with...</Text>
 
@@ -147,6 +150,7 @@ export default function SearchHomeScreen({
 				/>
 			</View>
 		</View>
+		// </ThemeProvider>
 	);
 }
 
@@ -206,13 +210,13 @@ function buildTagFilterObject(
 		retFilterObj.push(temp);
 	}
 
-	if (priceTagIndex !== 0) {
-		let temp = {
-			category: "price",
-			tag: arrPriceTags[priceTagIndex],
-		};
-		retFilterObj.push(temp);
-	}
+	// if (priceTagIndex !== 0) {
+	// 	let temp = {
+	// 		category: "price",
+	// 		tag: arrPriceTags[priceTagIndex],
+	// 	};
+	// 	retFilterObj.push(temp);
+	// }
 
 	return retFilterObj;
 }
