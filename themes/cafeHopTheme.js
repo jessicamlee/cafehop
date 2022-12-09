@@ -2,21 +2,14 @@ import { createTheme } from "@rneui/themed";
 
 // palette is kept as a separate variable to make it easy to change colours
 const themePalette = {
-
 	black: "#000000",
 	white: "#ffffff",
 	primary: "#ca9393",
-  primaryOne: '#D17F7F',
+	primaryOne: "#D17F7F",
 	primaryLighter: "#d5c1b7",
 	grey: "#626262",
-	greyLighter: "#dddddd",
+	greyLighter: "#F2F2F2",
 };
-
-
-
-
-
-
 
 // a theme follows the pattern: components > [ComponentType] > [ComponentStyle]
 export const cafeHopTheme = createTheme({
