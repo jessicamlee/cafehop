@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Text, Button, ButtonGroup, Divider } from "@rneui/themed";
+import CheckBox from "expo-checkbox";
 import { ThemeProvider } from "@rneui/themed";
 import { cafeHopTheme } from "../themes/cafeHopTheme";
 
@@ -37,120 +38,186 @@ export default function SearchHomeScreen({
 	const [musicTagIndex, setMusicTagIndex] = useState(0);
 	const [featureTagIndex, setAmenTagIndex] = useState(0);
 
-	return (
-		// <ThemeProvider theme={cafeHopTheme}>
-		<View style={styles.container}>
-			<Text style={styles.pText}>I would like a café with...</Text>
+	const [checkedWifi, setCheckedWifi] = useState(false);
+	const [checkedOutlets, setCheckedOutlets] = useState(false);
+	const [checkedFood, setCheckedFood] = useState(false);
+	const [checkedSeats, setCheckedSeats] = useState(false);
+	const [checkedTransit, setCheckedTransit] = useState(false);
 
-			<View style={styles.groupContainer}>
-				<Text style={styles.longTitleBackground}>Noise Level</Text>
-				<View style={styles.space}>
+	return (
+		<ScrollView>
+			<View style={styles.container}>
+				<Text style={styles.pText}>I would like a café with...</Text>
+
+				<View style={styles.groupContainer}>
+					<Text style={styles.longTitleBackground}>Noise Level</Text>
+					<View style={styles.space}>
+						<ButtonGroup
+							buttons={arrNoiseTags}
+							selectedIndex={noiseTagIndex}
+							onPress={(value) => {
+								setNoiseTagIndex(value);
+							}}
+						/>
+					</View>
+				</View>
+
+				<View style={styles.groupContainer}>
+					<Text style={styles.shortTitleBackground}>Decor</Text>
 					<ButtonGroup
-						buttons={arrNoiseTags}
-						selectedIndex={noiseTagIndex}
+						buttons={arrDecorTags}
+						selectedIndex={decorTagIndex}
 						onPress={(value) => {
-							setNoiseTagIndex(value);
+							setDecorTagIndex(value);
+						}}
+					/>
+				</View>
+
+				<View style={styles.groupContainer}>
+					<Text style={styles.shortTitleBackground}>Music</Text>
+					<ButtonGroup
+						buttons={arrMusicTags}
+						selectedIndex={musicTagIndex}
+						onPress={(value) => {
+							setMusicTagIndex(value);
+						}}
+					/>
+				</View>
+				<View style={styles.groupContainer}>
+					<Text style={styles.mediumTitleBackground}>Features</Text>
+					<View style={styles.wrapper}>
+						<CheckBox
+							style={styles.checkboxContainer}
+							value={checkedWifi}
+							onValueChange={() => setCheckedWifi(!checkedWifi)}
+							color={checkedWifi ? "#7E5D41" : undefined}
+							onPress={(value) => {
+								featureTagIndex(value);
+							}}
+							// selectedIndex={featureTagIndex}
+						/>
+						<Text style={styles.text}>{arrFeatureTags[0]}</Text>
+					</View>
+				</View>
+				<View style={styles.groupContainer}>
+					<View style={styles.wrapper}>
+						<CheckBox
+							style={styles.checkboxContainer}
+							value={checkedOutlets}
+							onValueChange={() =>
+								setCheckedOutlets(!checkedOutlets)
+							}
+							color={checkedOutlets ? "#7E5D41" : undefined}
+							onPress={(value) => {
+								featureTagIndex(value);
+							}}
+							// selectedIndex={featureTagIndex}
+						/>
+						<Text style={styles.text}>{arrFeatureTags[1]}</Text>
+					</View>
+				</View>
+				<View style={styles.groupContainer}>
+					<View style={styles.wrapper}>
+						<CheckBox
+							style={styles.checkboxContainer}
+							value={checkedFood}
+							onValueChange={() => setCheckedFood(!checkedFood)}
+							color={checkedFood ? "#7E5D41" : undefined}
+							onPress={(value) => {
+								featureTagIndex(value);
+							}}
+							// selectedIndex={featureTagIndex}
+						/>
+						<Text style={styles.text}>{arrFeatureTags[2]}</Text>
+					</View>
+				</View>
+				<View style={styles.groupContainer}>
+					<View style={styles.wrapper}>
+						<CheckBox
+							style={styles.checkboxContainer}
+							value={checkedSeats}
+							onValueChange={() => setCheckedSeats(!checkedSeats)}
+							color={checkedSeats ? "#7E5D41" : undefined}
+							onPress={(value) => {
+								featureTagIndex(value);
+							}}
+							// selectedIndex={featureTagIndex}
+						/>
+						<Text style={styles.text}>{arrFeatureTags[3]}</Text>
+					</View>
+				</View>
+				<View style={styles.groupContainer}>
+					<View style={styles.wrapper}>
+						<CheckBox
+							style={styles.checkboxContainer}
+							value={checkedTransit}
+							onValueChange={() =>
+								setCheckedTransit(!checkedTransit)
+							}
+							color={checkedTransit ? "#7E5D41" : undefined}
+							onPress={(value) => {
+								featureTagIndex(value);
+							}}
+							// selectedIndex={featureTagIndex}
+						/>
+						<Text style={styles.text}>{arrFeatureTags[4]}</Text>
+					</View>
+				</View>
+				<Divider style={styles.divLine} />
+
+				<View style={styles.btnContainer}>
+					<Button
+						title="Apply"
+						icon={{
+							name: "filter",
+							type: "font-awesome",
+							size: 15,
+							color: "white",
+						}}
+						onPress={() => {
+							// build the return object
+							let tagObj = buildTagFilterObject(
+								noiseTagIndex,
+								decorTagIndex,
+								musicTagIndex,
+								featureTagIndex
+							);
+
+							// also take a snapshot, this will allow a reset the next time around
+							takeSnapshot(
+								noiseTagIndex,
+								decorTagIndex,
+								musicTagIndex,
+								featureTagIndex
+							);
+
+							setIsVisible(false);
+						}}
+					/>
+				</View>
+				<View style={styles.btnContainer}>
+					<Button
+						title="Cancel"
+						icon={{
+							name: "close",
+							type: "font-awesome",
+							size: 15,
+							color: "white",
+						}}
+						onPress={() => {
+							// reset to snapshot
+							setNoiseTagIndex(snapshot[0]);
+							setDecorTagIndex(snapshot[1]);
+							setMusicTagIndex(snapshot[2]);
+							setAmenTagIndex(snapshot[3]);
+
+							// don't need to return anything since it should be the same as the current fetch
+							setIsVisible(false);
 						}}
 					/>
 				</View>
 			</View>
-
-			<View style={styles.groupContainer}>
-				<Text style={styles.shortTitleBackground}>Decor</Text>
-				<ButtonGroup
-					buttons={arrDecorTags}
-					selectedIndex={decorTagIndex}
-					onPress={(value) => {
-						setDecorTagIndex(value);
-					}}
-				/>
-			</View>
-
-			<View style={styles.groupContainer}>
-				<Text style={styles.shortTitleBackground}>Music</Text>
-				<ButtonGroup
-					buttons={arrMusicTags}
-					selectedIndex={musicTagIndex}
-					onPress={(value) => {
-						setMusicTagIndex(value);
-					}}
-				/>
-			</View>
-
-			<View style={styles.groupContainer}>
-				<Text style={styles.mediumTitleBackground}>Features</Text>
-				<ButtonGroup
-					buttons={arrFeatureTags}
-					selectedIndex={featureTagIndex}
-					onPress={(value) => {
-						setFeatureTagIndex(value);
-					}}
-				/>
-			</View>
-
-			<Divider style={styles.divLine} />
-
-			<View style={styles.btnContainer}>
-				<Button
-					title="Apply"
-					icon={{
-						name: "filter",
-						type: "font-awesome",
-						size: 15,
-						color: "white",
-					}}
-					onPress={() => {
-						// build the return object
-						let tagObj = buildTagFilterObject(
-							noiseTagIndex,
-							decorTagIndex,
-							musicTagIndex,
-							featureTagIndex
-						);
-
-						// also take a snapshot, this will allow a reset the next time around
-						takeSnapshot(
-							noiseTagIndex,
-							decorTagIndex,
-							musicTagIndex,
-							featureTagIndex
-						);
-
-						//console.log(JSON.stringify(ret));
-						//console.log('snap:' + JSON.stringify(snapshot));
-
-						// set back in the parent
-						setTagFilter(tagObj);
-
-						// hide the overlay
-						setIsVisible(false);
-					}}
-				/>
-			</View>
-			<View style={styles.btnContainer}>
-				<Button
-					title="Cancel"
-					icon={{
-						name: "close",
-						type: "font-awesome",
-						size: 15,
-						color: "white",
-					}}
-					onPress={() => {
-						// reset to snapshot
-						setNoiseTagIndex(snapshot[0]);
-						setDecorTagIndex(snapshot[1]);
-						setMusicTagIndex(snapshot[2]);
-						setAmenTagIndex(snapshot[3]);
-						setPriceTagIndex(snapshot[4]);
-
-						// don't need to return anything since it should be the same as the current fetch
-						setIsVisible(false);
-					}}
-				/>
-			</View>
-		</View>
-		// </ThemeProvider>
+		</ScrollView>
 	);
 }
 
@@ -177,7 +244,6 @@ function buildTagFilterObject(
 ) {
 	let retFilterObj = [];
 
-	// 0 is any, so don't add
 	if (noiseTagIndex !== 0) {
 		let temp = {
 			category: "noise",
@@ -210,14 +276,6 @@ function buildTagFilterObject(
 		retFilterObj.push(temp);
 	}
 
-	// if (priceTagIndex !== 0) {
-	// 	let temp = {
-	// 		category: "price",
-	// 		tag: arrPriceTags[priceTagIndex],
-	// 	};
-	// 	retFilterObj.push(temp);
-	// }
-
 	return retFilterObj;
 }
 
@@ -240,17 +298,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		padding: 5,
 	},
-
-	divLine: {
-		marginTop: 10,
-		marginBottom: 10,
-	},
-
-	pText: {
-		fontSize: 20,
-		paddingBottom: 10,
-	},
-
 	shortTitleBackground: {
 		backgroundColor: "#CEA885",
 		color: "#fff",
@@ -281,5 +328,34 @@ const styles = StyleSheet.create({
 		paddingLeft: 10,
 		textTransform: "uppercase",
 		marginBottom: 25,
+	},
+
+	divLine: {
+		marginTop: 10,
+		marginBottom: 10,
+	},
+
+	pText: {
+		fontSize: 20,
+		paddingBottom: 10,
+	},
+
+	checkboxContainer: {
+		marginLeft: 30,
+		marginTop: 10,
+	},
+
+	wrapper: {
+		height: 45,
+		margin: 10,
+		flexDirection: "row",
+		alignContent: "center",
+		backgroundColor: "#F2F2F2",
+		borderRadius: 25,
+	},
+	text: {
+		marginLeft: 10,
+		marginTop: 10,
+		color: "#626262",
 	},
 });
