@@ -16,15 +16,15 @@ export default function ListItemTemplate({
 	// use the helper function in the data file to get a specific flower
 	const currCafe = itemData;
 
-	// amenities map here
-
-	currCafe.tags.forEach((cafe) => {
-		console.log(1231239, cafe.tag);
-	});
-
-	console.log(7654, itemData);
 	return (
-		<ListItem containerStyle={{ alignItems: "flex-start" }}>
+		<ListItem
+			containerStyle={{ alignItems: "flex-start" }}
+			onPress={() =>
+				navigatorRef.navigate("MapCafeDetails", {
+					detailId: cafe.id,
+				})
+			}
+		>
 			<Avatar
 				source={{ uri: itemData.cover_img }}
 				size={140}

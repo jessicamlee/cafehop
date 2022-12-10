@@ -1,6 +1,3 @@
-import { View } from "react-native";
-import { Icon } from "@rneui/themed";
-
 // importing RN Stack Navigator library for nested Stack navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -15,9 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function AppContainerStackNav() {
 	return (
-        <Stack.Navigator
-			initialRouteName="OnboardOne"
-		>
+		<Stack.Navigator initialRouteName="OnboardOne">
 			<Stack.Screen
 				name="OnboardOne"
 				component={OnboardScreenOne}
@@ -50,6 +45,6 @@ export default function AppContainerStackNav() {
 					headerShown: false,
 				}}
 			/>
-        </Stack.Navigator>
-    );
+		</Stack.Navigator>
+	);
 }

@@ -6,9 +6,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // importing screens (for Stack navigation)
 import SearchHomeScreen from "./SearchHomeScreen";
-import SearchAFeaturesScreen from "./SearchAFeatures";
 import SearchBMapsScreenList from "./SearchBMapsScreenList";
-import CafeDetailScreen from "./MapCafeDetails";
+import CafeDetailScreen from "./CafeDetailScreen";
 
 // Instantiating Stack navigator component (as a constant) to reference in the search page/screen of the app
 const Stack = createNativeStackNavigator();

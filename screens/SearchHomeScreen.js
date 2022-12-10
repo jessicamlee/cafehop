@@ -177,17 +177,6 @@ export default function SearchHomeScreen({ navigation }) {
 								tags: tagArr,
 							};
 
-							console.log(11111, payload);
-
-							const ding = {
-								sort_term: "location-name-desc",
-								tag_filter_type: "ANY",
-								tags: [
-									{ category: "noise", tag: "3" },
-									{ category: "decor", tag: "Cozy" },
-									{ category: "music", tag: "chinese" },
-								],
-							};
 							fetch(
 								"https://cafehopshops.jessicamlee.dev/api/v1/locations/searchbytag.php",
 								{
@@ -217,7 +206,7 @@ export default function SearchHomeScreen({ navigation }) {
 										return;
 									},
 									(err) => {
-										console.log(err);
+										console.error(err);
 									}
 								)
 								.catch((err) => {
