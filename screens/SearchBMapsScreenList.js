@@ -5,17 +5,12 @@ import { Text } from "@rneui/themed"; // UI components from React Native Element
 // importing RNE <list item> component/template file, which will be rendered using the static data fed in through cafe-data.js file
 import ListItemTemplate from "../components/ListItemTemplate";
 
-// importing static cafe-data file (to act as API requests)
-import { getAllCafes } from "../data/cafe-data";
-
 export default function SearchBMapsScreenList({ route, navigation }) {
 	const renderItem = ({ item }) => (
 		<ListItemTemplate itemData={item} navigatorRef={navigation} />
 	);
 
 	const { cafes } = route.params;
-
-	console.log(cafes, 404);
 
 	return (
 		<ScrollView style={styles.container}>
