@@ -9,18 +9,13 @@ import {
 } from "react-native";
 import { Text } from "@rneui/themed";
 
-import { getAllCafes } from "../data/cafe-data";
-
 export default function HomeScreen() {
 	const [images, setImages] = useState([]);
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	const clientKey = "dKK5AkmtyO5fzvtFKb8-ocZrWXj9NssdsXqjCaXZqWw";
-	const currImage = "coffee";
-	const page = 1;
-	const per_page = 10;
-	const uri = `https://api.unsplash.com/search/photos/?query=${currImage}&client_id=${clientKey}&page=${page}&per_page=${per_page}`;
+	const uri =
+		"https://cafehopshops.jessicamlee.dev/api/v1/locations/read.php";
 
 	const imageURL =
 		"https://images.unsplash.com/photo-1516743619420-154b70a65fea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80";
@@ -31,24 +26,31 @@ export default function HomeScreen() {
 			.then(
 				(result) => {
 					setIsLoaded(true);
-					setImages(result.results);
+					setImages(result.locations);
 				},
 				(error) => {
 					setIsLoaded(true);
 					setError(error);
 				}
 			);
-	}, [currImage]);
+	}, []);
 
 	return (
 		<View style={styles.container}>
 			<Text h3 style={styles.heading}>
 				RECENT SAVES
 			</Text>
-			{/* <Image style={styles.favoritesImage} source={{ uri: imageURL }} /> */}
+			<Image style={styles.favoritesImage} source={{ uri: imageURL }} />
 			<ImageBackground
-				source={{ uri: imageURL }}
-				style={styles.favoritesImage}
+				source={uri}
+				style={{
+					...styles.favoritesImage,
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+				}}
 				imageStyle={{ borderRadius: 6 }}
 			>
 				<View
@@ -80,9 +82,9 @@ function displayDataContainer(error, isLoaded, dataResult) {
 	// since flatlist will be moved to this function we need renderItem in scope
 	const renderItem = ({ item }) => (
 		<View style={styles.imageCard}>
-			<Image style={styles.image} source={{ uri: item.urls.regular }} />
+			<Image style={styles.image} source={{ uri: item.cover_img }} />
 			<Text h4 style={styles.h4}>
-				{[item.user.name]}
+				{[item.name]}
 			</Text>
 			<Text h4 style={styles.h4}>
 				{[item.likes]}
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
 
 	heading: {
 		textAlign: "center",
-		// marginBottom: 30,
+		color: "#ffffff",
 	},
 
 	pText: {
@@ -153,8 +155,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		margin: 5,
 		borderColor: "#000000",
-		// borderStyle: "solid",
-		// borderWidth: 1,
 		borderRadius: 10,
 	},
 

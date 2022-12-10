@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // importing screens (for Stack navigation)
 import SearchHomeScreen from "./SearchHomeScreen";
 import SearchAFeaturesScreen from "./SearchAFeatures";
-import SearchBMapsScreenList from "./SearchBMap";
+import SearchBMapsScreenList from "./SearchBMapsScreenList";
 import CafeDetailScreen from "./MapCafeDetails";
 
 // Instantiating Stack navigator component (as a constant) to reference in the search page/screen of the app
@@ -35,11 +35,7 @@ export default function SearchScreenStackNav() {
 					headerShown: false,
 				}}
 			/>
-			<Stack.Screen
-				name="SearchByFeatures"
-				component={SearchAFeaturesScreen}
-				options={{ title: "CHOOSE YOUR AMBIANCE" }}
-			/>
+
 			<Stack.Screen
 				name="SearchByMaps"
 				component={SearchBMapsScreenList}

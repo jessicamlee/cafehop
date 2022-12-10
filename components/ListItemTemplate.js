@@ -17,32 +17,16 @@ export default function ListItemTemplate({
 	const currCafe = itemData;
 
 	// amenities map here
-	const cafeTags = currCafe.tags.map((currTags) => (
-		// how we are mapping it
-		// currTags.key & currTags.value are coming from the key & value in the amenities array [] in cafe-data.js
-		<View>
-			<Chip
-				key={currTags.key}
-				containerStyle={{
-					marginVertical: 4,
-					// paddingVertical: 0, ==> unsure how to make chip padding less
-					height: 38,
-				}}
-				titleStyle={{
-					fontFamily: "ElMessiri_400Regular",
-					fontSize: 16,
-					color: "#000",
-				}}
-			>
-				{currTags.value}
-			</Chip>
-		</View>
-	));
 
+	currCafe.tags.forEach((cafe) => {
+		console.log(1231239, cafe.tag);
+	});
+
+	console.log(7654, itemData);
 	return (
 		<ListItem containerStyle={{ alignItems: "flex-start" }}>
 			<Avatar
-				source={{ uri: itemData.keyImage }}
+				source={{ uri: itemData.cover_img }}
 				size={140}
 				containerStyle={{ aspectRatio: 1.25 }}
 				onPress={() =>
@@ -70,11 +54,27 @@ export default function ListItemTemplate({
 					{itemData.name}
 				</Text>
 
-				{cafeTags}
-
-				<View style={styles.hours}>
-					<Text h4>Hours:</Text>
-					<Text style={styles.pText}>{itemData.hours}</Text>
+				<View style={styles.container}>
+					{currCafe &&
+						currCafe.tags.map((currTags) => (
+							<View>
+								<Chip
+									key={currTags.tag_id}
+									containerStyle={{
+										marginVertical: 4,
+										height: 38,
+									}}
+									titleStyle={{
+										fontFamily: "ElMessiri_400Regular",
+										fontSize: 16,
+										color: "#000",
+									}}
+								>
+									{currTags.tag.charAt(0).toUpperCase() +
+										currTags.tag.slice(1)}
+								</Chip>
+							</View>
+						))}
 				</View>
 			</ListItem.Content>
 
