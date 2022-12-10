@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Text, Button, ButtonGroup, Divider } from "@rneui/themed";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, View, Button } from "react-native";
+import { Text, ButtonGroup, Divider } from "@rneui/themed";
 import CheckBox from "expo-checkbox";
-import { ThemeProvider } from "@rneui/themed";
-import { cafeHopTheme } from "../themes/cafeHopTheme";
 
 const arrNoiseTags = ["1", "2", "3", "4", "5"];
+const arrNoiseWordTags = [
+	"very quiet",
+	"quiet",
+	"average",
+	"loud",
+	"very loud",
+];
 const arrDecorTags = [
 	"Modern",
 	"Minimal",
@@ -23,15 +28,8 @@ const arrFeatureTags = [
 	"Free parking",
 	"Transit-access",
 ];
-const arrPriceTags = ["any", "$", "$$", "$$$"];
 
-let snapshot = [0, 0, 0, 0, 0];
-
-export default function SearchHomeScreen({
-	isVisible,
-	setIsVisible,
-	setTagFilter,
-}) {
+export default function SearchHomeScreen({ navigation }) {
 	// state for each button group
 	const [noiseTagIndex, setNoiseTagIndex] = useState(0);
 	const [decorTagIndex, setDecorTagIndex] = useState(0);
@@ -111,7 +109,6 @@ export default function SearchHomeScreen({
 							onPress={(value) => {
 								featureTagIndex(value);
 							}}
-							// selectedIndex={featureTagIndex}
 						/>
 						<Text style={styles.text}>{arrFeatureTags[1]}</Text>
 					</View>
@@ -126,7 +123,6 @@ export default function SearchHomeScreen({
 							onPress={(value) => {
 								featureTagIndex(value);
 							}}
-							// selectedIndex={featureTagIndex}
 						/>
 						<Text style={styles.text}>{arrFeatureTags[2]}</Text>
 					</View>
@@ -141,7 +137,6 @@ export default function SearchHomeScreen({
 							onPress={(value) => {
 								featureTagIndex(value);
 							}}
-							// selectedIndex={featureTagIndex}
 						/>
 						<Text style={styles.text}>{arrFeatureTags[3]}</Text>
 					</View>
@@ -158,7 +153,6 @@ export default function SearchHomeScreen({
 							onPress={(value) => {
 								featureTagIndex(value);
 							}}
-							// selectedIndex={featureTagIndex}
 						/>
 						<Text style={styles.text}>{arrFeatureTags[4]}</Text>
 					</View>
@@ -167,52 +161,81 @@ export default function SearchHomeScreen({
 
 				<View style={styles.btnContainer}>
 					<Button
-						title="Apply"
-						icon={{
-							name: "filter",
-							type: "font-awesome",
-							size: 15,
-							color: "white",
-						}}
+						title="See Results ->"
+						color="#000000"
 						onPress={() => {
-							// build the return object
-							let tagObj = buildTagFilterObject(
+							let tagArr = buildTagFilterObject(
 								noiseTagIndex,
 								decorTagIndex,
 								musicTagIndex,
 								featureTagIndex
 							);
 
-							// also take a snapshot, this will allow a reset the next time around
-							takeSnapshot(
-								noiseTagIndex,
-								decorTagIndex,
-								musicTagIndex,
-								featureTagIndex
-							);
+							const payload = {
+								sort_term: "location-name-desc",
+								tag_filter_type: "ANY",
+								tags: tagArr,
+							};
 
-							setIsVisible(false);
+							console.log(11111, payload);
+
+							const ding = {
+								sort_term: "location-name-desc",
+								tag_filter_type: "ANY",
+								tags: [
+									{ category: "noise", tag: "3" },
+									{ category: "decor", tag: "Cozy" },
+									{ category: "music", tag: "chinese" },
+								],
+							};
+							fetch(
+								"https://cafehopshops.jessicamlee.dev/api/v1/locations/searchbytag.php",
+								{
+									method: "POST",
+									body: JSON.stringify(payload),
+									headers: {
+										"Content-type":
+											"application/json; charset=UTF-8",
+									},
+								}
+							)
+								.then((res) => {
+									if (res.status >= 400 && res.status < 600) {
+										throw new Error(
+											"Bad response from server"
+										);
+									}
+									return res.json();
+								})
+								.then(
+									(json) => {
+										console.log("Success");
+										navigation.navigate("SearchByMaps", {
+											cafes: json,
+											postSuccess: true,
+										});
+										return;
+									},
+									(err) => {
+										console.log(err);
+									}
+								)
+								.catch((err) => {
+									Promise.reject(err);
+								});
 						}}
 					/>
 				</View>
 				<View style={styles.btnContainer}>
 					<Button
 						title="Cancel"
-						icon={{
-							name: "close",
-							type: "font-awesome",
-							size: 15,
-							color: "white",
-						}}
+						color="#000000"
 						onPress={() => {
-							// reset to snapshot
-							setNoiseTagIndex(snapshot[0]);
-							setDecorTagIndex(snapshot[1]);
-							setMusicTagIndex(snapshot[2]);
-							setAmenTagIndex(snapshot[3]);
-
-							// don't need to return anything since it should be the same as the current fetch
-							setIsVisible(false);
+							// reset
+							setNoiseTagIndex(0);
+							setDecorTagIndex(0);
+							setMusicTagIndex(0);
+							setAmenTagIndex(0);
 						}}
 					/>
 				</View>
@@ -221,33 +244,18 @@ export default function SearchHomeScreen({
 	);
 }
 
-function takeSnapshot(
-	noiseTagIndex,
-	decorTagIndex,
-	musicTagIndex,
-	amenTagIndex,
-	priceTagIndex
-) {
-	snapshot[0] = noiseTagIndex;
-	snapshot[1] = decorTagIndex;
-	snapshot[2] = musicTagIndex;
-	snapshot[3] = amenTagIndex;
-	snapshot[4] = priceTagIndex;
-}
-
 function buildTagFilterObject(
 	noiseTagIndex,
 	decorTagIndex,
 	musicTagIndex,
-	amenTagIndex,
-	priceTagIndex
+	amenTagIndex
 ) {
 	let retFilterObj = [];
 
 	if (noiseTagIndex !== 0) {
 		let temp = {
 			category: "noise",
-			tag: arrNoiseTags[noiseTagIndex],
+			tag: arrNoiseWordTags[noiseTagIndex],
 		};
 		retFilterObj.push(temp);
 	}
@@ -262,8 +270,8 @@ function buildTagFilterObject(
 
 	if (musicTagIndex !== 0) {
 		let temp = {
-			category: "decor",
-			tag: arrMusicTags[musicTagIndex],
+			category: "music",
+			tag: arrMusicTags[musicTagIndex].toLowerCase(),
 		};
 		retFilterObj.push(temp);
 	}

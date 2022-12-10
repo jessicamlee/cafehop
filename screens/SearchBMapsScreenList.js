@@ -8,10 +8,14 @@ import ListItemTemplate from "../components/ListItemTemplate";
 // importing static cafe-data file (to act as API requests)
 import { getAllCafes } from "../data/cafe-data";
 
-export default function SearchBMapsScreenList({ navigation }) {
+export default function SearchBMapsScreenList({ route, navigation }) {
 	const renderItem = ({ item }) => (
 		<ListItemTemplate itemData={item} navigatorRef={navigation} />
 	);
+
+	const { cafes } = route.params;
+
+	console.log(cafes, 404);
 
 	return (
 		<ScrollView style={styles.container}>
@@ -20,9 +24,9 @@ export default function SearchBMapsScreenList({ navigation }) {
 			</Text>
 
 			<FlatList
-				data={getAllCafes()}
+				data={cafes.locations}
 				renderItem={renderItem}
-				keyExtractor={(item) => item.id}
+				keyExtractor={(item) => item.name}
 			/>
 		</ScrollView>
 	);
